@@ -52,22 +52,45 @@ while True:
             for row in result:
                 print(row)
     elif choice == '3':
+        cursor.execute("SELECT * FROM names ORDER BY amount DESC LIMIT 5")
+        result = cursor.fetchall()
+        print(result)
+
         # atlasīt top 5 vārdus pēc populāritātes
         # https://www.w3schools.com/sql/sql_orderby.asp (ORDER BY)
         # https://www.w3schools.com/sql/sql_top.asp (LIMIT)
         pass
     elif choice == '4':
-        gender = input("Ievadi VĪRIETIS/SIEVIETE: ")
+        gender_choose = input("Ievadi VĪRIETIS/SIEVIETE: ")
+        if gender_choose == "SIEVIETE":
+            cursor.execute("SELECT COUNT(*) FROM names WHERE gender='SIEVIETE'") 
+            result = cursor.fetchall()
+            print("Sieviešu vārdu skaits pēc dzimuma: ", result)
+        elif gender_choose == "VĪRIETIS":
+            cursor.execute("SELECT COUNT(*) FROM names WHERE gender='VĪRIETIS'") 
+            result = cursor.fetchall()
+            print("Viriešu vārdu skaits pēc dzimuma: ", result)
         # Parādīt kopējo vārdu skaitu pēc dzimuma
         # https://www.w3schools.com/sql/sql_count.asp (COUNT)
         # https://www.w3schools.com/sql/sql_where.asp (WHERE)
     elif choice == '5':
-        gender = input("Ievadi VĪRIETIS/SIEVIETE: ")
+        gender_choose = input("Ievadi VĪRIETIS/SIEVIETE: ")
+        if gender_choose == "SIEVIETE":
+            cursor.execute("SELECT AVG(amount) FROM names WHERE gender='SIEVIETE'") 
+            result = cursor.fetchall()
+            print("Sieviešu vidējais vārdu skaits pēc dzimuma: ", result)
+        elif gender_choose == "VĪRIETIS":
+            cursor.execute("SELECT AVG(amount) FROM names WHERE gender='VĪRIETIS'") 
+            result = cursor.fetchall()
+            print("Viriešu vidējais vārdu skaits pēc dzimuma: ", result)
         # Parādīt vidējo vārdu skaitu pēc dzimuma
         # https://www.w3schools.com/sql/sql_avg.asp (AVG)
         # https://www.w3schools.com/sql/sql_where.asp (WHERE)
     elif choice == '6':
-        amount = input("Ievadi daudzumu: ")
+        My_amount = input("Ievadi daudzumu: ")
+        cursor.execute("SELECT * FROM names WHERE amount=?", (My_amount,))
+        result = cursor.fetchall()
+        print(My_amount, "pēc daudzuma ir ", result)
         # Parādīt vārdus pēc daudzuma
         # https://www.w3schools.com/sql/sql_where.asp (WHERE)
     elif choice == '7':
